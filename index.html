@@ -174,20 +174,29 @@
             </button>
         </div>
 
-        <!-- Tahap 2: Pertanyaan Isian -->
+        <!-- Tahap 2: Pertanyaan Pertama (Jadian) -->
         <div id="step-2" class="hidden">
-            <h2>Jawab Dulu Pertanyaan Ini! 🤔</h2>
-            <p>Siapa nama orang paling tulus yang sayang banget sama kamu?</p>
-            <!-- Kamu bisa ubah kata kunci jawaban di dalam script jika mau -->
-            <input type="text" id="answer-input" class="input-box" placeholder="Ketik jawabanmu di sini...">
-            <button class="btn-love" onclick="checkAnswer()">
+            <h2>Pertanyaan 1/2 🤔</h2>
+            <p>Kita jadian tanggal, bulan, dan tahun berapa ya?</p>
+            <input type="text" id="answer-1" class="input-box" placeholder="Contoh: 14 februari 2023">
+            <button class="btn-love" onclick="checkAnswer1()">
+                <span>💌</span> Lanjut
+            </button>
+        </div>
+
+        <!-- Tahap 3: Pertanyaan Kedua (Putus) -->
+        <div id="step-3" class="hidden">
+            <h2>Pertanyaan 2/2 🧐</h2>
+            <p>Kita putus tanggal, bulan, dan tahun berapa ya?</p>
+            <input type="text" id="answer-2" class="input-box" placeholder="Contoh: 20 mei 2024">
+            <button class="btn-love" onclick="checkAnswer2()">
                 <span>💌</span> Kirim Jawaban
             </button>
         </div>
 
-        <!-- Tahap 3: Kata-kata Balikan (Jika Benar) -->
-        <div id="step-3" class="hidden">
-            <h2>Yeay, Benar! 🎉</h2>
+        <!-- Tahap 4: Kata-kata Balikan (Jika Benar Semua) -->
+        <div id="step-4" class="hidden">
+            <h2>Yeay, Benar Semua! 🎉</h2>
             <p>Makasih ya udah mau nerima aku lagi dan balikan sama aku. Janji deh bakal lebih baik dan bikin kamu bahagia terus. I love you! ❤️✨</p>
             <button class="btn-love" onclick="location.reload()">
                 <span>🔄</span> Ulangi Dari Awal
@@ -222,18 +231,34 @@
             document.getElementById('step-1').classList.add('hidden');
             document.getElementById('step-2').classList.add('hidden');
             document.getElementById('step-3').classList.add('hidden');
+            document.getElementById('step-4').classList.add('hidden');
 
             document.getElementById('step-' + stepNumber).classList.remove('hidden');
         }
 
-        // Cek Jawaban Isian
-        function checkAnswer() {
-            const userAnswer = document.getElementById('answer-input').value.trim().toLowerCase();
+        // Cek Jawaban Pertanyaan 1 (Jadian)
+        function checkAnswer1() {
+            const userAnswer = document.getElementById('answer-1').value.trim().toLowerCase();
             
-            // ATUR JAWABAN BENAR DI SINI (Contoh: namamu atau kata "aku")
-            // Kamu bisa tambahkan variasi jawaban menggunakan tanda || (atau)
-            if (userAnswer === 'kamu' || userAnswer === 'aku' || userAnswer === 'pacar kamu') {
-                nextStep(3);
+            // ⚠️ ATUR TANGGAL JADIAN DI SINI (Bisa diubah sesuai keinginan)
+            const tanggalJadianBenar = "14 februari 2023"; 
+
+            if (userAnswer === tanggalJadianBenar || userAnswer.includes("14 feb")) {
+                nextStep(3); // Lanjut ke pertanyaan kedua
+            } else {
+                triggerJumpscare();
+            }
+        }
+
+        // Cek Jawaban Pertanyaan 2 (Putus)
+        function checkAnswer2() {
+            const userAnswer = document.getElementById('answer-2').value.trim().toLowerCase();
+            
+            // ⚠️ ATUR TANGGAL PUTUS DI SINI (Bisa diubah sesuai keinginan)
+            const tanggalPutusBenar = "20 mei 2024";
+
+            if (userAnswer === tanggalPutusBenar || userAnswer.includes("20 mei")) {
+                nextStep(4); // Lanjut ke halaman ucapan balikan
             } else {
                 triggerJumpscare();
             }
