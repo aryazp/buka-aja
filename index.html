@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Special for You 💖</title>
+    <title>Special for Vannie 💖</title>
+    <!-- Import Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -165,17 +166,21 @@
 </head>
 <body>
 
+    <!-- Background Floating Love Effect -->
     <div id="bg-hearts"></div>
 
+    <!-- Main Card Content -->
     <div class="card" id="main-card">
+        <!-- Tahap 1: Pembuka -->
         <div id="step-1">
-            <h2>Hai Kamu! 💖</h2>
-            <p>Aku punya sesuatu yang penting nih buat kamu. Buka pesannya dengan klik tombol di bawah ya!</p>
+            <h2>Hai Vannie 💖</h2>
+            <p>Kalo ga sibuk bisa minta tolong dibuka ya</p>
             <button class="btn-love" onclick="nextStep(2)">
                 <span>❤️</span> Buka Pesan
             </button>
         </div>
 
+        <!-- Tahap 2: Tebak-tebakan -->
         <div id="step-2" class="hidden">
             <h2>Tebak-Tebakan Dulu! 🤔</h2>
             <p>Siapa orang paling ganteng/cantik dan paling tulus yang sayang banget sama kamu?</p>
@@ -186,6 +191,7 @@
             </div>
         </div>
 
+        <!-- Tahap 3: Kata-kata Balikan (Jika Benar) -->
         <div id="step-3" class="hidden">
             <h2>Yeay, Benar! 🎉</h2>
             <p>Makasih ya udah mau nerima aku lagi dan balikan sama aku. Janji deh bakal lebih baik dan bikin kamu bahagia terus. I love you! ❤️✨</p>
@@ -195,6 +201,7 @@
         </div>
     </div>
 
+    <!-- Jumpscare Screen -->
     <div id="jumpscare-overlay">
         <img src="https://images.unsplash.com/photo-1514539079130-25950c84af65?w=500&auto=format&fit=crop&q=60" alt="Jumpscare">
         <h1>SALAHHH! 👻</h1>
@@ -230,7 +237,6 @@
             const overlay = document.getElementById('jumpscare-overlay');
             overlay.style.display = 'flex';
 
-            // Jumpscare muncul selama 2 detik lalu hilang kembali ke tebak-tebakan
             setTimeout(() => {
                 overlay.style.display = 'none';
             }, 2000);
