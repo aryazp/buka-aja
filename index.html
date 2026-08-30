@@ -178,7 +178,7 @@
         <div id="step-2" class="hidden">
             <h2>Pertanyaan 1/2 🤔</h2>
             <p>Kita jadian tanggal, bulan, dan tahun berapa ya?</p>
-            <input type="text" id="answer-1" class="input-box" placeholder="Contoh: 14 februari 2023">
+            <input type="text" id="answer-1" class="input-box" placeholder="Contoh: 17 januari 2005">
             <button class="btn-love" onclick="checkAnswer1()">
                 <span>💌</span> Lanjut
             </button>
@@ -188,7 +188,7 @@
         <div id="step-3" class="hidden">
             <h2>Pertanyaan 2/2 🧐</h2>
             <p>Kita putus tanggal, bulan, dan tahun berapa ya?</p>
-            <input type="text" id="answer-2" class="input-box" placeholder="Contoh: 20 mei 2024">
+            <input type="text" id="answer-2" class="input-box" placeholder="Contoh: 10 juli 2026">
             <button class="btn-love" onclick="checkAnswer2()">
                 <span>💌</span> Kirim Jawaban
             </button>
@@ -239,11 +239,9 @@
         // Cek Jawaban Pertanyaan 1 (Jadian)
         function checkAnswer1() {
             const userAnswer = document.getElementById('answer-1').value.trim().toLowerCase();
-            
-            // ⚠️ ATUR TANGGAL JADIAN DI SINI (Bisa diubah sesuai keinginan)
-            const tanggalJadianBenar = "14 februari 2023"; 
+            const tanggalJadianBenar = "17 januari 2005"; 
 
-            if (userAnswer === tanggalJadianBenar || userAnswer.includes("14 feb")) {
+            if (userAnswer === tanggalJadianBenar || userAnswer.includes("17 jan")) {
                 nextStep(3); // Lanjut ke pertanyaan kedua
             } else {
                 triggerJumpscare();
@@ -253,11 +251,9 @@
         // Cek Jawaban Pertanyaan 2 (Putus)
         function checkAnswer2() {
             const userAnswer = document.getElementById('answer-2').value.trim().toLowerCase();
-            
-            // ⚠️ ATUR TANGGAL PUTUS DI SINI (Bisa diubah sesuai keinginan)
-            const tanggalPutusBenar = "20 mei 2024";
+            const tanggalPutusBenar = "10 juli 2026";
 
-            if (userAnswer === tanggalPutusBenar || userAnswer.includes("20 mei")) {
+            if (userAnswer === tanggalPutusBenar || userAnswer.includes("10 jul")) {
                 nextStep(4); // Lanjut ke halaman ucapan balikan
             } else {
                 triggerJumpscare();
