@@ -96,28 +96,22 @@
             background-color: #e63956;
         }
 
-        /* Pilihan Tebak-Tebakan */
-        .choices-container {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 15px;
-        }
-
-        .choice-btn {
-            background: #fff;
+        /* Input Question Styling */
+        .input-box {
+            width: 100%;
+            padding: 12px 15px;
             border: 2px solid #ff4d6d;
-            color: #ff4d6d;
-            padding: 10px;
             border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
+            font-size: 15px;
+            outline: none;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #333;
         }
 
-        .choice-btn:hover {
-            background: #ff4d6d;
-            color: white;
+        .input-box:focus {
+            border-color: #d63384;
+            box-shadow: 0 0 5px rgba(255, 77, 109, 0.5);
         }
 
         /* Jumpscare Overlay */
@@ -180,15 +174,15 @@
             </button>
         </div>
 
-        <!-- Tahap 2: Tebak-tebakan -->
+        <!-- Tahap 2: Pertanyaan Isian -->
         <div id="step-2" class="hidden">
-            <h2>Tebak-Tebakan Dulu! 🤔</h2>
-            <p>Siapa orang paling ganteng/cantik dan paling tulus yang sayang banget sama kamu?</p>
-            <div class="choices-container">
-                <button class="choice-btn" onclick="triggerJumpscare()">A. Artis Korea / Mantan Kamu</button>
-                <button class="choice-btn" onclick="triggerJumpscare()">B. Tetangga sebelah rumah</button>
-                <button class="choice-btn" onclick="correctAnswer()">C. Yang lagi baca web ini sekarang 🥰</button>
-            </div>
+            <h2>Jawab Dulu Pertanyaan Ini! 🤔</h2>
+            <p>Siapa nama orang paling tulus yang sayang banget sama kamu?</p>
+            <!-- Kamu bisa ubah kata kunci jawaban di dalam script jika mau -->
+            <input type="text" id="answer-input" class="input-box" placeholder="Ketik jawabanmu di sini...">
+            <button class="btn-love" onclick="checkAnswer()">
+                <span>💌</span> Kirim Jawaban
+            </button>
         </div>
 
         <!-- Tahap 3: Kata-kata Balikan (Jika Benar) -->
@@ -208,7 +202,7 @@
     </div>
 
     <script>
-        // Membuat animasi latar belakang love mengambang secara otomatis
+        // Membuat animasi latar belakang love mengambang
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('floating-love');
@@ -223,7 +217,7 @@
         }
         setInterval(createHeart, 300);
 
-        // Fungsi Navigasi Antar Step
+        // Fungsi Navigasi Step
         function nextStep(stepNumber) {
             document.getElementById('step-1').classList.add('hidden');
             document.getElementById('step-2').classList.add('hidden');
@@ -232,7 +226,20 @@
             document.getElementById('step-' + stepNumber).classList.remove('hidden');
         }
 
-        // Fungsi Jika Jawaban Salah (Memunculkan Jumpscare)
+        // Cek Jawaban Isian
+        function checkAnswer() {
+            const userAnswer = document.getElementById('answer-input').value.trim().toLowerCase();
+            
+            // ATUR JAWABAN BENAR DI SINI (Contoh: namamu atau kata "aku")
+            // Kamu bisa tambahkan variasi jawaban menggunakan tanda || (atau)
+            if (userAnswer === 'kamu' || userAnswer === 'aku' || userAnswer === 'pacar kamu') {
+                nextStep(3);
+            } else {
+                triggerJumpscare();
+            }
+        }
+
+        // Fungsi Jumpscare jika salah
         function triggerJumpscare() {
             const overlay = document.getElementById('jumpscare-overlay');
             overlay.style.display = 'flex';
@@ -240,11 +247,6 @@
             setTimeout(() => {
                 overlay.style.display = 'none';
             }, 2000);
-        }
-
-        // Fungsi Jika Jawaban Benar
-        function correctAnswer() {
-            nextStep(3);
         }
     </script>
 </body>
