@@ -13,7 +13,9 @@
     }
 
     body {
-      background: #f7f3f2;
+      background: linear-gradient(-45deg, #ffe6eb, #f7f3f2, #fff0f5, #f3e5f5);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
       font-family: 'Poppins', sans-serif;
       min-height: 100vh;
       display: flex;
@@ -22,6 +24,28 @@
       padding: 20px;
       color: #5a5a5a;
       overflow-x: hidden;
+      position: relative;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* EFEK HATI MELAYANG */
+    .floating-heart {
+      position: fixed;
+      bottom: -20px;
+      color: rgba(216, 27, 96, 0.25);
+      pointer-events: none;
+      z-index: 0;
+      animation: floatUp linear forwards;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+      100% { transform: translateY(-105vh) rotate(360deg); opacity: 0; }
     }
 
     /* KONTROL AUDIO FLOATING */
@@ -83,6 +107,7 @@
       transition: opacity 0.8s ease, transform 0.8s ease;
       opacity: 1;
       transform: scale(1);
+      z-index: 1;
     }
 
     #startScreen.fade-out {
@@ -214,6 +239,7 @@
       opacity: 0;
       transform: translateY(30px);
       transition: opacity 1s ease, transform 1s ease;
+      z-index: 1;
     }
 
     #contentScreen.fade-in {
@@ -223,7 +249,8 @@
     }
 
     .paper-card {
-      background: #e9f0df;
+      background: rgba(233, 240, 223, 0.95);
+      backdrop-filter: blur(5px);
       border-radius: 16px;
       padding: 30px 25px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.05);
@@ -276,7 +303,8 @@
 
     /* BUBBLE WRAP CARD */
     .bubble-card {
-      background: #e9f0df;
+      background: rgba(233, 240, 223, 0.95);
+      backdrop-filter: blur(5px);
       border-radius: 16px;
       padding: 25px 20px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.05);
@@ -553,6 +581,20 @@
         muteBtn.innerText = '🔊';
       }
     }
+
+    // Efek Hati Melayang di Background
+    function createFloatingHearts() {
+      const heart = document.createElement('div');
+      heart.classList.add('floating-heart');
+      heart.innerHTML = '♥';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = Math.random() * 3 + 4 + 's';
+      heart.style.fontSize = Math.random() * 12 + 10 + 'px';
+      document.body.appendChild(heart);
+
+      setTimeout(() => { heart.remove(); }, 6000);
+    }
+    setInterval(createFloatingHearts, 500);
 
     const messages = [
       "I love u",
