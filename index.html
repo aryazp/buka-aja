@@ -36,7 +36,7 @@
       transform: scale(1);
     }
 
-    /* EFEK KETIKA SURAT DIPENCET (MEMUDAR DAN MENGECIL HALUS) */
+    /* EFEK KETIKA SURAT DIPENCET (FADE OUT HALUS) */
     #startScreen.fade-out {
       opacity: 0;
       transform: scale(0.92);
@@ -166,7 +166,6 @@
       transition: opacity 1s ease, transform 1s ease;
     }
 
-    /* KETIKA SURAT TAMPIL DENGAN EFEK SLIDE & FADE HALUS */
     #contentScreen.fade-in {
       display: block;
       opacity: 1;
@@ -221,7 +220,7 @@
     .heart-icon {
       text-align: center;
       color: #e91e63;
-      margin: 15px 0;
+      margin: 18px 0;
       font-size: 14px;
     }
 
@@ -310,14 +309,35 @@
       <h1 class="paper-title">Dear <span>Vannie</span></h1>
 
       <div class="paper-body">
-        <p><strong>Buat Vannie,</strong></p>
-        <p>Aku nggak terlalu jago bikin surat kayak gini, tapi rasanya chat pendek nggak cukup buat jelasin semuanya.</p>
-        <p>Aku mau mulai dari minta maaf dulu. Maaf karena kemarin aku sempet bikin kamu kesel, sedih, atau merasa ga dipikirin.</p>
+        <p>Aku ga terlalu jago buat surat kayak gini, dan aku juga ga jago merangkai kata-kata yang bagus. Menurutku, chat pendek juga ga cukup buat ngejelasin semuanya.</p>
+        <p>Maybe I should just say sorry first, ngl.</p>
+        <p>Maaf kemarin aku sibuk dengan duniaku sendiri dan bikin kamu nunggu aku tanpa kabar. Aku tahu yang mungkin bikin kamu kesel bukan cuma karena aku sibuk dan lama bales, tapi kayak kamu ngerasa enggak dianggap, dan mungkin sampai kamu berpikiran, "Kita ini pacaran apa ngapain sih?" Dan mungkin kalau aku di posisi kamu, aku juga pasti kesel sendiri, Van.</p>
+        <p>Aku minta maaf. Aku udah ngelakuin hal bodoh kayak gitu, dan aku enggak sengaja bikin kamu sedih. Kemarin aku terlalu fokus sama duniaku sendiri, entah itu teman-temanku, kuliahku, urusan kampusku, atau lomba yang mau aku ikutin yang dulu sempat aku ceritain ke kamu. Kemarin aku terlalu fokus sama semua hal itu. Aku juga lupa ngabarin kamu.</p>
+        <p>Bahkan aku sampai lupa kalau ada lampu kecil yang nungguin aku di ujung jalan.</p>
+        <p>Aku ngakuin semua kesalahanku, Van.</p>
         
         <div class="heart-icon">♥</div>
 
-        <p>Jujur, hariku sepi banget kalau ga sama kamu. Aku sadar betapa berharganya kamu buat aku.</p>
-        <p>Sekali lagi maafin aku yaa... <strong>Ayo kita balikan lagi? :(</strong></p>
+        <p>Hari terakhir kita, pas kamu minta penjelasan dan pas kamu minta kita udahin semua ini, aku sebenarnya pengen nahan kamu. Aku ga bales chat kamu, aku sengaja. Aku bingung aku harus gimana. Aku sayang sama kamu, tapi di sisi lain kamu pengen udahin semua yang udah kita lakuin.</p>
+        <p>Sampai pada akhirnya aku bales chat kamu dengan pasrah sama keadaan. Aku jawab chat kamu, dan bodohnya aku bilang, "iya," padahal aku sebenarnya ga mau nyudahin semua itu.</p>
+        <p>Gatau... aku ga terbiasa bilang enggak saat orang mutusin aku, Van :' (</p>
+        <p>Aku sadar sekarang, inti dari permasalahan kita yang berujung udahan ini cuma WAKTU.</p>
+        <p>Ngasih kabar itu hal kecil yang seharusnya bisa aku usahain. Bukan soal harus ngobrol lama. Kadang satu pesan, "Bentar, aku lagi a/b/c, nanti aku kabarin lagi ya," mungkin udah cukup supaya kamu ga ngerasa ditinggal.</p>
+        <p>Aku ga mau pakai alasan perkuliahan, pertemanan, atau main sebagai alasan. Karena kalau ada yang penting buat kita, harusnya bisa disisihin sedikit waktu buat kasih ketenangan.</p>
+        
+        <div class="heart-icon">♥</div>
+
+        <p>Dan jujur, aku ga suka kita udahan :' (</p>
+        <p>Aku kangen ngobrol sama kamu. Kangen hal-hal kecil yang dulu pernah kita lakuin. Kangen semua sifat kamu ke aku.</p>
+        <p>Aku juga ga mau kamu berpikir, waktu kamu minta putus dan aku iyain, kalau aku nyepelein kamu. Aku waktu itu gatau harus gimana. Aku bingung, aku sedih, dan aku masih sayang sama kamu.</p>
+        <p>Aku tahu minta maaf ga cukup buat buktiin ke kamu kalau aku benar-benar mau kembali lagi kayak dulu. Aku tahu minta maaf juga ga bisa bikin kamu yakin untuk kembali sama aku.</p>
+        <p>Please, give me a shot. I'll prove that I'm fr serious about you.</p>
+        <p>Aku ga pernah sengemis ini sama orang. Aku sayang sama kamu. Aku bingung gimana caranya ngajak kamu kembali :' (</p>
+        <p>Aku cuma mau bilang...</p>
+        <p>Aku ga lupa sama kamu.<br>
+        Aku sayang kamu.<br>
+        Aku salah cara nunjukin cintaku ke kamu.</p>
+        <p style="margin-top: 15px; color: #d81b60; font-weight: 500;">Ayo pulang. :)<br>Maaf ya, Vannie.</p>
       </div>
     </div>
 
@@ -338,15 +358,12 @@
       const startScreen = document.getElementById('startScreen');
       const contentScreen = document.getElementById('contentScreen');
       
-      // 1. Jalankan efek fade-out amplop
       startScreen.classList.add('fade-out');
       
-      // 2. Tunggu transisi fade-out selesai (800ms) lalu tampilkan isi surat
       setTimeout(() => {
         startScreen.style.display = 'none';
         contentScreen.style.display = 'block';
         
-        // Memicu reflow agar animasi CSS bekerja sempurna
         void contentScreen.offsetWidth;
         
         contentScreen.classList.add('fade-in');
