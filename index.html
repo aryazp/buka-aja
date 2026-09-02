@@ -18,6 +18,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       min-height: 100vh;
       padding: 20px;
     }
@@ -28,9 +29,9 @@
       text-align: center;
     }
 
-    /* AMPLOP SURAT */
+    /* AMPLOP SURAT (TAMPILAN PERTAMA) */
     .envelope-wrapper {
-      margin: 50px auto 20px;
+      margin: 0 auto;
       width: 280px;
       height: 180px;
       background-color: #f06292;
@@ -40,6 +41,7 @@
       cursor: pointer;
       box-shadow: 0 10px 20px rgba(0,0,0,0.15);
       perspective: 1000px;
+      transition: margin 0.5s ease;
     }
 
     .envelope-flap {
@@ -61,10 +63,11 @@
       bottom: 20px;
       width: 100%;
       color: #fff;
-      font-size: 24px;
+      font-size: 26px;
       font-weight: bold;
       z-index: 2;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+      letter-spacing: 2px;
     }
 
     .envelope-wrapper.open .envelope-flap {
@@ -72,12 +75,12 @@
       z-index: 1;
     }
 
-    /* KARTU SURAT */
+    /* KARTU SURAT (TERSEMBUNYI DULU) */
     .letter-card {
       background: #ffffff;
       border-radius: 15px;
       padding: 25px;
-      margin-top: 20px;
+      margin-top: 25px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.08);
       display: none;
       opacity: 0;
@@ -103,13 +106,23 @@
       font-size: 15px;
     }
 
-    /* BUBBLE WRAP */
+    /* BUBBLE WRAP (TERSEMBUNYI DULU) */
     .bubble-section {
-      margin-top: 40px;
+      margin-top: 30px;
       background: #fff;
       padding: 20px;
       border-radius: 15px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+
+    .bubble-section.show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .bubble-section h3 {
@@ -166,7 +179,7 @@
       <p><strong>Ayo balikan lagi sama aku? :(</strong></p>
     </div>
 
-    <div class="bubble-section">
+    <div class="bubble-section" id="bubbleSection">
       <h3>Bubble Wrap Buat Vannie 🎈</h3>
       <div class="bubble-grid" id="bubbleGrid"></div>
       
@@ -180,10 +193,15 @@
     function openLetter() {
       const envelope = document.getElementById('envelope');
       const letterCard = document.getElementById('letterCard');
+      const bubbleSection = document.getElementById('bubbleSection');
       
+      // Buka animasi amplop
       envelope.classList.add('open');
+      
+      // Munculkan isi surat dan bubble wrap secara bertahap
       setTimeout(() => {
         letterCard.classList.add('show');
+        bubbleSection.classList.add('show');
       }, 400);
     }
 
@@ -203,7 +221,7 @@
       bubbleGrid.appendChild(bubble);
     }
 
-    // Efek Suara Popping (Pakai Web Audio API)
+    // Efek Suara Popping
     function playPopSound() {
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
       const osc = ctx.createOscillator();
