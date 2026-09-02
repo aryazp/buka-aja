@@ -13,7 +13,8 @@
     }
 
     body {
-      background: linear-gradient(-45deg, #ffe6eb, #f7f3f2, #fff0f5, #f3e5f5);
+      /* Warna background diubah dari cream lembut ke pink-pink an */
+      background: linear-gradient(-45deg, #fff5eb, #ffe4e8, #fdf0ed, #ffd1dc);
       background-size: 400% 400%;
       animation: gradientBG 15s ease infinite;
       font-family: 'Poppins', sans-serif;
@@ -64,18 +65,19 @@
       .bg-nick { right: -10px; }
     }
 
-    /* EFEK HATI MELAYANG */
+    /* EFEK HATI MELAYANG (DIPERJELAS) */
     .floating-heart {
       position: fixed;
       bottom: -20px;
-      color: rgba(216, 27, 96, 0.25);
+      color: #e91e63; /* Warna pink/merah muda cerah dan tegas */
       pointer-events: none;
       z-index: 0;
+      text-shadow: 0 0 8px rgba(233, 30, 99, 0.4); /* Efek glow/bayangan agar makin tegas */
       animation: floatUp linear forwards;
     }
 
     @keyframes floatUp {
-      0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.95; }
       100% { transform: translateY(-105vh) rotate(360deg); opacity: 0; }
     }
 
@@ -288,7 +290,7 @@
     }
 
     .paper-card {
-      background: rgba(233, 240, 223, 0.95);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(5px);
       border-radius: 16px;
       padding: 30px 25px;
@@ -343,7 +345,7 @@
 
     /* BUBBLE WRAP CARD */
     .bubble-card {
-      background: rgba(233, 240, 223, 0.95);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(5px);
       border-radius: 16px;
       padding: 25px 20px;
@@ -504,8 +506,8 @@
 <body>
 
   <!-- GAMBAR BACKGROUND JUDY & NICK -->
-<img src="Judy_Hopps.png" alt="Judy Hopps" class="bg-character bg-judy">
-<img src="Nick_Wilde.png" alt="Nick Wilde" class="bg-character bg-nick">
+  <img src="Judy_Hopps.png" alt="Judy Hopps" class="bg-character bg-judy">
+  <img src="Nick_Wilde.png" alt="Nick Wilde" class="bg-character bg-nick">
 
   <!-- ELEMENT AUDIO UNTUK LAGU BACKSOUND -->
   <audio id="bgMusic" loop>
@@ -636,19 +638,21 @@
       if(nick) nick.style.transform = `translate(${-x}px, ${-y}px)`;
     });
 
-    /* EFEK HATI MELAYANG */
+    /* EFEK HATI MELAYANG (DI-MODIFIKASI AGAR LEBIH JELAS & VARIATIF) */
     function createFloatingHearts() {
       const heart = document.createElement('div');
       heart.classList.add('floating-heart');
       heart.innerHTML = '♥';
       heart.style.left = Math.random() * 100 + 'vw';
       heart.style.animationDuration = Math.random() * 3 + 4 + 's';
-      heart.style.fontSize = Math.random() * 12 + 10 + 'px';
+      /* Ukuran dinaikkan (14px - 26px) agar lebih terlihat jelas */
+      heart.style.fontSize = Math.random() * 12 + 14 + 'px'; 
       document.body.appendChild(heart);
 
       setTimeout(() => { heart.remove(); }, 6000);
     }
-    setInterval(createFloatingHearts, 500);
+    /* Durasi pembentukan dipercepat sedikit agar lebih banyak yang melayang */
+    setInterval(createFloatingHearts, 350);
 
     /* EFEK TYPING JUDUL */
     function typeTitle() {
