@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Untuk Vannie</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400;1,600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -17,15 +17,21 @@
       font-family: 'Poppins', sans-serif;
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      justify-content: flex-start;
-      padding: 40px 20px;
-      overflow-x: hidden;
+      padding: 20px;
       color: #5a5a5a;
     }
 
-    /* BADGE ATAS */
+    /* HALAMAN 1: AMPLOP DI TENGAH LAYAR */
+    #startScreen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 80vh;
+    }
+
     .top-badge {
       background: #fce4ec;
       color: #d81b60;
@@ -33,15 +39,14 @@
       border-radius: 20px;
       font-size: 12px;
       letter-spacing: 1px;
-      margin-bottom: 40px;
+      margin-bottom: 35px;
       box-shadow: 0 2px 8px rgba(216, 27, 96, 0.1);
     }
 
-    /* AMPLOP WRAPPER */
     .envelope-container {
       position: relative;
-      width: 320px;
-      height: 200px;
+      width: 310px;
+      height: 195px;
       background-color: #ff5277;
       border-radius: 12px;
       box-shadow: 0 15px 35px rgba(255, 82, 119, 0.25);
@@ -54,10 +59,9 @@
     }
 
     .envelope-container:hover {
-      transform: translateY(-5px);
+      transform: scale(1.03);
     }
 
-    /* EFEK LIPATAN AMPLOP */
     .envelope-container::before {
       content: '';
       position: absolute;
@@ -65,14 +69,13 @@
       left: 0;
       width: 0;
       height: 0;
-      border-left: 160px solid #ff6b8b;
-      border-right: 160px solid #ff6b8b;
-      border-top: 110px solid transparent;
+      border-left: 155px solid #ff6b8b;
+      border-right: 155px solid #ff6b8b;
+      border-top: 105px solid transparent;
       border-bottom: 90px solid #ff4069;
       border-radius: 12px;
     }
 
-    /* BUNGA SAKURA POJOK KANAN ATAS */
     .flower-stamp {
       position: absolute;
       top: -12px;
@@ -89,7 +92,6 @@
       z-index: 5;
     }
 
-    /* SEGEL HATI DITENGAH */
     .heart-seal {
       position: absolute;
       top: calc(50% - 35px);
@@ -106,7 +108,6 @@
       z-index: 4;
     }
 
-    /* TEKS DI AMPLOP */
     .envelope-text {
       position: absolute;
       bottom: 25px;
@@ -120,19 +121,16 @@
       letter-spacing: 3px;
       text-transform: uppercase;
       opacity: 0.9;
-      margin-bottom: 2px;
     }
 
     .envelope-text .name {
       font-family: 'Playfair Display', serif;
       font-size: 26px;
       font-weight: 600;
-      letter-spacing: 1px;
     }
 
-    /* TEKS PETUNJUK BUKA (DENGAN ANIMASI NAIK TURUN) */
     .click-hint {
-      margin-top: 25px;
+      margin-top: 30px;
       font-size: 12px;
       letter-spacing: 2px;
       color: #888;
@@ -140,126 +138,198 @@
       animation: bounce 1.8s infinite ease-in-out;
     }
 
-    /* ANIMASI BERGERAK NAIK-TURUN */
     @keyframes bounce {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(8px);
-      }
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
     }
 
-    /* ISI SURAT (POPUP/SLIDE OUT) */
-    .letter-card {
-      max-width: 400px;
-      width: 100%;
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 25px;
-      margin-top: 30px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    /* HALAMAN 2: ISI SURAT & BUBBLE WRAP */
+    #contentScreen {
       display: none;
-      text-align: left;
-      line-height: 1.7;
-      animation: fadeIn 0.5s ease forwards;
+      max-width: 460px;
+      width: 100%;
+      margin: 20px 0;
+      animation: fadeIn 0.6s ease forwards;
     }
 
-    .letter-card h2 {
+    /* KERTAS SURAT SEPERTI SCREENSHOT */
+    .paper-card {
+      background: #e9f0df; /* Warna krem kehijauan khas */
+      border-radius: 16px;
+      padding: 30px 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .paper-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .paper-date {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      color: #7b8e70;
+      text-transform: uppercase;
+    }
+
+    .paper-title {
       font-family: 'Playfair Display', serif;
-      color: #d81b60;
-      margin-bottom: 12px;
+      font-size: 32px;
+      color: #2c3e2e;
+      margin-bottom: 15px;
     }
 
-    /* BUBBLE WRAP SECTION */
-    .bubble-section {
-      max-width: 400px;
-      width: 100%;
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 20px;
-      margin-top: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-      display: none;
+    .paper-title span {
+      color: #e91e63;
+      font-style: italic;
+    }
+
+    .paper-body {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #4a5a4c;
+    }
+
+    .paper-body p {
+      margin-bottom: 14px;
+    }
+
+    .heart-icon {
       text-align: center;
-      animation: fadeIn 0.5s ease forwards;
+      color: #e91e63;
+      margin: 15px 0;
+      font-size: 14px;
+    }
+
+    /* CARD BUBBLE WRAP */
+    .bubble-card {
+      background: #e9f0df;
+      border-radius: 16px;
+      padding: 25px 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .bubble-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .bubble-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: #2c3e2e;
+    }
+
+    .bubble-title span {
+      color: #e91e63;
+      font-style: italic;
+    }
+
+    .bubble-subtext {
+      font-size: 12px;
+      color: #6a7b6c;
+      margin-bottom: 20px;
     }
 
     .bubble-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 10px;
-      margin: 15px 0;
+      gap: 12px;
       justify-items: center;
     }
 
+    /* BUBBLE PINK SOFT */
     .bubble {
-      width: 42px;
-      height: 42px;
-      background: radial-gradient(circle at 30% 30%, #e0f7fa, #80deea);
+      width: 48px;
+      height: 48px;
+      background: radial-gradient(circle at 30% 30%, #ffcdd2, #ef9a9a);
       border-radius: 50%;
-      box-shadow: inset 0 2px 4px rgba(255,255,255,0.8), 0 2px 5px rgba(0,0,0,0.08);
+      box-shadow: inset 0 2px 4px rgba(255,255,255,0.8), 0 3px 6px rgba(0,0,0,0.06);
       cursor: pointer;
+      transition: transform 0.1s;
     }
 
     .bubble.popped {
-      background: #cfd8dc;
+      background: #d7ccc8;
       box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
-      transform: scale(0.92);
+      transform: scale(0.9);
       cursor: default;
     }
 
-    .note-text {
-      font-size: 13px;
-      color: #666;
-      line-height: 1.5;
-      margin-top: 10px;
-    }
-
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
+      from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
 
-  <!-- Badge Atas -->
-  <div class="top-badge">♥ With Love</div>
-
-  <!-- Amplop Surat Utama -->
-  <div class="envelope-container" onclick="openEnvelope()">
-    <div class="flower-stamp">🌸</div>
-    <div class="heart-seal">♥</div>
-    <div class="envelope-text">
-      <div class="sub">UNTUK</div>
-      <div class="name">Vannie</div>
+  <!-- HALAMAN 1: AMPLOP SURAT (TENGAH LAYAR) -->
+  <div id="startScreen">
+    <div class="top-badge">♥ With Love</div>
+    <div class="envelope-container" onclick="openLetter()">
+      <div class="flower-stamp">🌸</div>
+      <div class="heart-seal">♥</div>
+      <div class="envelope-text">
+        <div class="sub">UNTUK</div>
+        <div class="name">Vannie</div>
+      </div>
     </div>
+    <div class="click-hint">↓ KETUK UNTUK BUKA ↓</div>
   </div>
 
-  <!-- Teks dengan animasi bergerak halus naik turun -->
-  <div class="click-hint">↓ KETUK UNTUK BUKA ↓</div>
+  <!-- HALAMAN 2: SURAT + BUBBLE WRAP (TAMPIL SETELAH AMPLOP DIKLIK) -->
+  <div id="contentScreen">
+    
+    <!-- Lembaran Surat -->
+    <div class="paper-card">
+      <div class="paper-header">
+        <div class="paper-date">SURAT UNTUKMU</div>
+        <div class="top-badge" style="margin:0;">♥ With Love</div>
+      </div>
 
-  <!-- Isi Surat -->
-  <div class="letter-card" id="letterCard">
-    <h2>Dear Vannie,</h2>
-    <p>Aku mau ngaku kalau aku banyak salah sama kamu. Maafin semua sifat dan perkataanku yang bikin kamu kesel atau sedih yaa...</p>
-    <p>Jujur, aku kangen banget sama kamu. Hariku berasa ada yang kurang kalau ga sama kamu.</p>
-    <p style="margin-top:10px; color:#d81b60; font-weight:500;">Ayo balikan lagi sama aku? :(</p>
-  </div>
+      <h1 class="paper-title">Dear <span>Vannie</span></h1>
 
-  <!-- Section Bubble Wrap -->
-  <div class="bubble-section" id="bubbleSection">
-    <div class="bubble-grid" id="bubbleGrid"></div>
-    <p class="note-text">
-      Pencet bubble wrap buka kejutan kecil, biar kamu ga stres, biar kamu ga galau, biar kamu ga bosen, dan sekali lagi maafin aku, ayo balik:(
-    </p>
+      <div class="paper-body">
+        <p><strong>Buat Vannie,</strong></p>
+        <p>Aku nggak terlalu jago bikin surat kayak gini, tapi rasanya chat pendek nggak cukup buat jelasin semuanya.</p>
+        <p>Aku mau mulai dari minta maaf dulu. Maaf karena kemarin aku sempet bikin kamu kesel, sedih, atau merasa ga dipikirin.</p>
+        
+        <div class="heart-icon">♥</div>
+
+        <p>Jujur, hariku sepi banget kalau ga sama kamu. Aku sadar betapa berharganya kamu buat aku.</p>
+        <p>Sekali lagi maafin aku yaa... <strong>Ayo kita balikan lagi? :(</strong></p>
+      </div>
+    </div>
+
+    <!-- Bubble Wrap -->
+    <div class="bubble-card">
+      <div class="bubble-header">
+        <div class="bubble-title">Bubble wrap <span>buat kamu.</span></div>
+      </div>
+      <p class="bubble-subtext">Pencet bubble wrap buat buka kejutan kecil, biar kamu ga stres dan ga galau~</p>
+
+      <div class="bubble-grid" id="bubbleGrid"></div>
+    </div>
+
   </div>
 
   <script>
-    function openEnvelope() {
-      document.getElementById('letterCard').style.display = 'block';
-      document.getElementById('bubbleSection').style.display = 'block';
+    function openLetter() {
+      // Sembunyikan amplop
+      document.getElementById('startScreen').style.display = 'none';
+      
+      // Tampilkan surat & bubble wrap
+      document.getElementById('contentScreen').style.display = 'block';
+      
+      // Scroll halus ke atas
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     // Generate Bubble Wrap
@@ -276,14 +346,14 @@
       bubbleGrid.appendChild(bubble);
     }
 
-    // Suara Letupan Bubble Wrap
+    // Suara Popping Bubble Wrap
     function playPopSound() {
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(800, ctx.currentTime);
+      osc.frequency.setValueAtTime(700, ctx.currentTime);
       osc.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + 0.04);
       
       gain.gain.setValueAtTime(0.2, ctx.currentTime);
