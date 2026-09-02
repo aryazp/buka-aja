@@ -264,7 +264,47 @@
     .bubble-subtext {
       font-size: 12px;
       color: #6a7b6c;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
+    }
+
+    /* TOMBOL RESET BUBBLE */
+    .reset-btn-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .reset-btn {
+      background: #d81b60;
+      color: white;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(216, 27, 96, 0.2);
+      transition: all 0.3s ease;
+      display: none;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .reset-btn.show {
+      display: inline-flex;
+      animation: fadeInBtn 0.5s ease;
+    }
+
+    .reset-btn:hover {
+      background: #c2185b;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(216, 27, 96, 0.3);
+    }
+
+    @keyframes fadeInBtn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* GRID BUBBLE WRAP */
@@ -413,6 +453,10 @@
       </div>
       <p class="bubble-subtext">Pencet bubble buat buka kejutan kecil. Anti-stress, anti-bosen, anti-galau~</p>
 
+      <div class="reset-btn-container">
+        <button class="reset-btn" id="resetBtn" onclick="resetBubbles()">🔄 Mainkan Lagi / Reset Bubble</button>
+      </div>
+
       <div class="bubble-grid" id="bubbleGrid"></div>
     </div>
 
@@ -473,6 +517,7 @@
     ];
 
     let poppedSet = new Set();
+    const TOTAL_BUBBLES = messages.length;
 
     function openLetter() {
       const startScreen = document.getElementById('startScreen');
@@ -493,6 +538,7 @@
 
     const bubbleGrid = document.getElementById('bubbleGrid');
     const poppedCountElem = document.getElementById('poppedCount');
+    const resetBtn = document.getElementById('resetBtn');
 
     messages.forEach((msgText, index) => {
       const wrapper = document.createElement('div');
@@ -518,8 +564,13 @@
         if (!bubble.classList.contains('popped')) {
           bubble.classList.add('popped');
           poppedSet.add(index);
-          poppedCountElem.innerText = `${poppedSet.size} / 50 DIPENCET`;
+          poppedCountElem.innerText = `${poppedSet.size} / ${TOTAL_BUBBLES} DIPENCET`;
           playPopSound();
+
+          // Cek apakah semua bubble sudah pecah (hancur)
+          if (poppedSet.size === TOTAL_BUBBLES) {
+            resetBtn.classList.add('show');
+          }
         }
 
         popup.classList.toggle('show');
@@ -527,6 +578,18 @@
 
       bubbleGrid.appendChild(wrapper);
     });
+
+    function resetBubbles() {
+      poppedSet.clear();
+      poppedCountElem.innerText = `0 / ${TOTAL_BUBBLES} DIPENCET`;
+      
+      // Reset tampilan semua bubble & popup ke kondisi normal
+      document.querySelectorAll('.bubble').forEach(b => b.classList.remove('popped'));
+      document.querySelectorAll('.bubble-popup').forEach(p => p.classList.remove('show'));
+      
+      // Sembunyikan tombol reset kembali
+      resetBtn.classList.remove('show');
+    }
 
     document.addEventListener('click', function() {
       document.querySelectorAll('.bubble-popup').forEach(p => p.classList.remove('show'));
