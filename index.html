@@ -386,6 +386,12 @@
 </head>
 <body>
 
+  <!-- ELEMENT AUDIO UNTUK LAGU BACKSOUND -->
+  <audio id="bgMusic" loop>
+    <source src="lagu.mp3" type="audio/mpeg">
+    Browser kamu tidak mendukung tag audio.
+  </audio>
+
   <!-- HALAMAN 1: AMPLOP SURAT -->
   <div id="startScreen">
     <div class="top-badge">With Love</div>
@@ -522,6 +528,10 @@
     function openLetter() {
       const startScreen = document.getElementById('startScreen');
       const contentScreen = document.getElementById('contentScreen');
+      const music = document.getElementById('bgMusic');
+
+      // Putar musik saat amplop diklik
+      music.play().catch(err => console.log("Gagal memutar audio:", err));
       
       startScreen.classList.add('fade-out');
       
@@ -567,7 +577,6 @@
           poppedCountElem.innerText = `${poppedSet.size} / ${TOTAL_BUBBLES} DIPENCET`;
           playPopSound();
 
-          // Cek apakah semua bubble sudah pecah (hancur)
           if (poppedSet.size === TOTAL_BUBBLES) {
             resetBtn.classList.add('show');
           }
@@ -583,11 +592,9 @@
       poppedSet.clear();
       poppedCountElem.innerText = `0 / ${TOTAL_BUBBLES} DIPENCET`;
       
-      // Reset tampilan semua bubble & popup ke kondisi normal
       document.querySelectorAll('.bubble').forEach(b => b.classList.remove('popped'));
       document.querySelectorAll('.bubble-popup').forEach(p => p.classList.remove('show'));
       
-      // Sembunyikan tombol reset kembali
       resetBtn.classList.remove('show');
     }
 
