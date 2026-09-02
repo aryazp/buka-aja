@@ -21,6 +21,7 @@
       align-items: center;
       padding: 20px;
       color: #5a5a5a;
+      overflow-x: hidden;
     }
 
     /* HALAMAN 1: AMPLOP DI TENGAH LAYAR */
@@ -30,6 +31,16 @@
       align-items: center;
       justify-content: center;
       min-height: 80vh;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* EFEK KETIKA SURAT DIPENCET (MEMUDAR DAN MENGECIL HALUS) */
+    #startScreen.fade-out {
+      opacity: 0;
+      transform: scale(0.92);
+      pointer-events: none;
     }
 
     .top-badge {
@@ -55,11 +66,12 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      transition: transform 0.3s ease;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
 
     .envelope-container:hover {
-      transform: scale(1.03);
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(255, 82, 119, 0.35);
     }
 
     .envelope-container::before {
@@ -149,12 +161,20 @@
       max-width: 460px;
       width: 100%;
       margin: 20px 0;
-      animation: fadeIn 0.6s ease forwards;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease, transform 1s ease;
     }
 
-    /* KERTAS SURAT SEPERTI SCREENSHOT */
+    /* KETIKA SURAT TAMPIL DENGAN EFEK SLIDE & FADE HALUS */
+    #contentScreen.fade-in {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     .paper-card {
-      background: #e9f0df; /* Warna krem kehijauan khas */
+      background: #e9f0df;
       border-radius: 16px;
       padding: 30px 25px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.05);
@@ -205,7 +225,6 @@
       font-size: 14px;
     }
 
-    /* CARD BUBBLE WRAP */
     .bubble-card {
       background: #e9f0df;
       border-radius: 16px;
@@ -244,7 +263,6 @@
       justify-items: center;
     }
 
-    /* BUBBLE PINK SOFT */
     .bubble {
       width: 48px;
       height: 48px;
@@ -261,16 +279,11 @@
       transform: scale(0.9);
       cursor: default;
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
   </style>
 </head>
 <body>
 
-  <!-- HALAMAN 1: AMPLOP SURAT (TENGAH LAYAR) -->
+  <!-- HALAMAN 1: AMPLOP SURAT -->
   <div id="startScreen">
     <div class="top-badge">♥ With Love</div>
     <div class="envelope-container" onclick="openLetter()">
@@ -284,7 +297,7 @@
     <div class="click-hint">↓ KETUK UNTUK BUKA ↓</div>
   </div>
 
-  <!-- HALAMAN 2: SURAT + BUBBLE WRAP (TAMPIL SETELAH AMPLOP DIKLIK) -->
+  <!-- HALAMAN 2: SURAT + BUBBLE WRAP -->
   <div id="contentScreen">
     
     <!-- Lembaran Surat -->
@@ -322,14 +335,23 @@
 
   <script>
     function openLetter() {
-      // Sembunyikan amplop
-      document.getElementById('startScreen').style.display = 'none';
+      const startScreen = document.getElementById('startScreen');
+      const contentScreen = document.getElementById('contentScreen');
       
-      // Tampilkan surat & bubble wrap
-      document.getElementById('contentScreen').style.display = 'block';
+      // 1. Jalankan efek fade-out amplop
+      startScreen.classList.add('fade-out');
       
-      // Scroll halus ke atas
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // 2. Tunggu transisi fade-out selesai (800ms) lalu tampilkan isi surat
+      setTimeout(() => {
+        startScreen.style.display = 'none';
+        contentScreen.style.display = 'block';
+        
+        // Memicu reflow agar animasi CSS bekerja sempurna
+        void contentScreen.offsetWidth;
+        
+        contentScreen.classList.add('fade-in');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 700);
     }
 
     // Generate Bubble Wrap
