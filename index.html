@@ -24,6 +24,55 @@
       overflow-x: hidden;
     }
 
+    /* KONTROL AUDIO FLOATING */
+    .audio-control-container {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(216, 27, 96, 0.2);
+      padding: 8px 14px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      z-index: 100;
+    }
+
+    .mute-btn {
+      background: none;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      color: #d81b60;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .volume-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 70px;
+      height: 4px;
+      border-radius: 2px;
+      background: #ffd3e0;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #d81b60;
+      cursor: pointer;
+    }
+
     /* HALAMAN 1: AMPLOP DI TENGAH LAYAR */
     #startScreen {
       display: flex;
@@ -392,6 +441,12 @@
     Browser kamu tidak mendukung tag audio.
   </audio>
 
+  <!-- PANEL KONTROL VOLUME -->
+  <div class="audio-control-container">
+    <button class="mute-btn" id="muteBtn" onclick="toggleMute()">🔊</button>
+    <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.01" value="0.2" oninput="changeVolume(this.value)">
+  </div>
+
   <!-- HALAMAN 1: AMPLOP SURAT -->
   <div id="startScreen">
     <div class="top-badge">With Love</div>
@@ -469,6 +524,36 @@
   </div>
 
   <script>
+    const music = document.getElementById('bgMusic');
+    const volumeSlider = document.getElementById('volumeSlider');
+    const muteBtn = document.getElementById('muteBtn');
+
+    // Default volume awal disetel ke 20% (0.2)
+    music.volume = 0.2;
+
+    function changeVolume(val) {
+      music.volume = val;
+      if (val == 0) {
+        muteBtn.innerText = '🔇';
+      } else {
+        muteBtn.innerText = '🔊';
+      }
+    }
+
+    function toggleMute() {
+      if (music.volume > 0) {
+        music.dataset.lastVolume = music.volume;
+        music.volume = 0;
+        volumeSlider.value = 0;
+        muteBtn.innerText = '🔇';
+      } else {
+        const restoreVol = music.dataset.lastVolume || 0.2;
+        music.volume = restoreVol;
+        volumeSlider.value = restoreVol;
+        muteBtn.innerText = '🔊';
+      }
+    }
+
     const messages = [
       "I love u",
       "Please, let’s go home.",
@@ -528,7 +613,6 @@
     function openLetter() {
       const startScreen = document.getElementById('startScreen');
       const contentScreen = document.getElementById('contentScreen');
-      const music = document.getElementById('bgMusic');
 
       // Putar musik saat amplop diklik
       music.play().catch(err => console.log("Gagal memutar audio:", err));
@@ -611,7 +695,7 @@
       osc.frequency.setValueAtTime(700, ctx.currentTime);
       osc.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + 0.04);
       
-      gain.gain.setValueAtTime(0.2, ctx.currentTime);
+      gain.gain.setValueAtTime(0.05, ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.04);
       
       osc.connect(gain);
