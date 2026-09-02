@@ -4,212 +4,251 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Untuk Vannie</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
     body {
-      background-color: #fce4ec;
-      color: #4a4a4a;
+      background: #f7f3f2;
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 20px;
+      justify-content: flex-start;
+      padding: 40px 20px;
+      overflow-x: hidden;
+      color: #5a5a5a;
     }
 
-    .container {
-      max-width: 500px;
-      width: 100%;
-      text-align: center;
+    /* BADGE ATAS */
+    .top-badge {
+      background: #fce4ec;
+      color: #d81b60;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      margin-bottom: 40px;
+      box-shadow: 0 2px 8px rgba(216, 27, 96, 0.1);
     }
 
-    /* AMPLOP SURAT (TAMPILAN PERTAMA) */
-    .envelope-wrapper {
-      margin: 0 auto;
-      width: 280px;
-      height: 180px;
-      background-color: #f06292;
+    /* AMPLOP WRAPPER */
+    .envelope-container {
       position: relative;
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
+      width: 320px;
+      height: 200px;
+      background-color: #ff5277;
+      border-radius: 12px;
+      box-shadow: 0 15px 35px rgba(255, 82, 119, 0.25);
       cursor: pointer;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-      perspective: 1000px;
-      transition: margin 0.5s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.3s ease;
     }
 
-    .envelope-flap {
+    .envelope-container:hover {
+      transform: translateY(-5px);
+    }
+
+    /* EFEK LIPATAN AMPLOP */
+    .envelope-container::before {
+      content: '';
       position: absolute;
       top: 0;
       left: 0;
       width: 0;
       height: 0;
-      border-left: 140px solid transparent;
-      border-right: 140px solid transparent;
-      border-top: 100px solid #ec407a;
-      transform-origin: top;
-      transition: transform 0.6s ease-in-out;
-      z-index: 3;
+      border-left: 160px solid #ff6b8b;
+      border-right: 160px solid #ff6b8b;
+      border-top: 110px solid transparent;
+      border-bottom: 90px solid #ff4069;
+      border-radius: 12px;
     }
 
-    .envelope-title {
+    /* BUNGA SAKURA POJOK KANAN ATAS */
+    .flower-stamp {
       position: absolute;
-      bottom: 20px;
-      width: 100%;
-      color: #fff;
+      top: -12px;
+      right: -12px;
+      width: 45px;
+      height: 45px;
+      background: #fff0f5;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      font-size: 24px;
+      z-index: 5;
+    }
+
+    /* SEGEL HATI DITENGAH */
+    .heart-seal {
+      position: absolute;
+      top: calc(50% - 35px);
+      width: 36px;
+      height: 36px;
+      background: #d81b60;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 4;
+    }
+
+    /* TEKS DI AMPLOP */
+    .envelope-text {
+      position: absolute;
+      bottom: 25px;
+      text-align: center;
+      color: white;
+      z-index: 4;
+    }
+
+    .envelope-text .sub {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.9;
+      margin-bottom: 2px;
+    }
+
+    .envelope-text .name {
+      font-family: 'Playfair Display', serif;
       font-size: 26px;
-      font-weight: bold;
-      z-index: 2;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-      letter-spacing: 2px;
+      font-weight: 600;
+      letter-spacing: 1px;
     }
 
-    .envelope-wrapper.open .envelope-flap {
-      transform: rotateX(180deg);
-      z-index: 1;
-    }
-
-    /* KARTU SURAT (TERSEMBUNYI DULU) */
-    .letter-card {
-      background: #ffffff;
-      border-radius: 15px;
-      padding: 25px;
+    /* TEKS PETUNJUK BUKA */
+    .click-hint {
       margin-top: 25px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-      display: none;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.5s ease;
-      text-align: left;
-      line-height: 1.6;
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: #888;
+      text-transform: uppercase;
     }
 
-    .letter-card.show {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
+    /* ISI SURAT (POPUP/SLIDE OUT) */
+    .letter-card {
+      max-width: 400px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 25px;
+      margin-top: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+      display: none;
+      text-align: left;
+      line-height: 1.7;
+      animation: fadeIn 0.5s ease forwards;
     }
 
     .letter-card h2 {
+      font-family: 'Playfair Display', serif;
       color: #d81b60;
-      margin-bottom: 15px;
-    }
-
-    .letter-card p {
       margin-bottom: 12px;
-      font-size: 15px;
     }
 
-    /* BUBBLE WRAP (TERSEMBUNYI DULU) */
+    /* BUBBLE WRAP SECTION */
     .bubble-section {
-      margin-top: 30px;
-      background: #fff;
+      max-width: 400px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 16px;
       padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      margin-top: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
       display: none;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.5s ease;
-    }
-
-    .bubble-section.show {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .bubble-section h3 {
-      color: #ad1457;
-      margin-bottom: 8px;
+      text-align: center;
+      animation: fadeIn 0.5s ease forwards;
     }
 
     .bubble-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 12px;
-      margin: 20px 0;
+      gap: 10px;
+      margin: 15px 0;
       justify-items: center;
     }
 
     .bubble {
-      width: 45px;
-      height: 45px;
+      width: 42px;
+      height: 42px;
       background: radial-gradient(circle at 30% 30%, #e0f7fa, #80deea);
       border-radius: 50%;
-      box-shadow: inset 0 2px 4px rgba(255,255,255,0.8), 0 3px 6px rgba(0,0,0,0.1);
+      box-shadow: inset 0 2px 4px rgba(255,255,255,0.8), 0 2px 5px rgba(0,0,0,0.08);
       cursor: pointer;
-      transition: transform 0.1s;
     }
 
     .bubble.popped {
-      background: #b2ebf2;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
-      transform: scale(0.9);
+      background: #cfd8dc;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
+      transform: scale(0.92);
       cursor: default;
     }
 
-    .note {
+    .note-text {
       font-size: 13px;
-      color: #78909c;
-      font-style: italic;
+      color: #666;
+      line-height: 1.5;
       margin-top: 10px;
-      line-height: 1.4;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <div class="envelope-wrapper" id="envelope" onclick="openLetter()">
-      <div class="envelope-flap"></div>
-      <div class="envelope-title">VANNIE</div>
-    </div>
+  <div class="top-badge">♥ With Love</div>
 
-    <div class="letter-card" id="letterCard">
-      <h2>Dear Vannie,</h2>
-      <p>Aku mau ngaku kalau aku banyak salah sama kamu. Maafin semua sifat dan perkataanku yang bikin kamu kesel atau sedih yaa...</p>
-      <p>Jujur, aku kangen banget sama kamu. Hariku berasa ada yang kurang kalau ga sama kamu.</p>
-      <p><strong>Ayo balikan lagi sama aku? :(</strong></p>
-    </div>
-
-    <div class="bubble-section" id="bubbleSection">
-      <h3>Bubble Wrap Buat Vannie 🎈</h3>
-      <div class="bubble-grid" id="bubbleGrid"></div>
-      
-      <p class="note">
-        pencet bubble wrap buka kejutan kecil, biar kamu ga stres, biar kamu ga galau, biar kamu ga bosen, dan sekali lagi maafin aku, ayo balik:(
-      </p>
+  <div class="envelope-container" onclick="openEnvelope()">
+    <div class="flower-stamp">🌸</div>
+    <div class="heart-seal">♥</div>
+    <div class="envelope-text">
+      <div class="sub">UNTUK</div>
+      <div class="name">Vannie</div>
     </div>
   </div>
 
+  <div class="click-hint">↓ KETUK UNTUK BUKA ↓</div>
+
+  <div class="letter-card" id="letterCard">
+    <h2>Dear Vannie,</h2>
+    <p>Aku mau ngaku kalau aku banyak salah sama kamu. Maafin semua sifat dan perkataanku yang bikin kamu kesel atau sedih yaa...</p>
+    <p>Jujur, aku kangen banget sama kamu. Hariku berasa ada yang kurang kalau ga sama kamu.</p>
+    <p style="margin-top:10px; color:#d81b60; font-weight:500;">Ayo balikan lagi sama aku? :(</p>
+  </div>
+
+  <div class="bubble-section" id="bubbleSection">
+    <div class="bubble-grid" id="bubbleGrid"></div>
+    <p class="note-text">
+      Pencet bubble wrap buka kejutan kecil, biar kamu ga stres, biar kamu ga galau, biar kamu ga bosen, dan sekali lagi maafin aku, ayo balik:(
+    </p>
+  </div>
+
   <script>
-    function openLetter() {
-      const envelope = document.getElementById('envelope');
-      const letterCard = document.getElementById('letterCard');
-      const bubbleSection = document.getElementById('bubbleSection');
-      
-      // Buka animasi amplop
-      envelope.classList.add('open');
-      
-      // Munculkan isi surat dan bubble wrap secara bertahap
-      setTimeout(() => {
-        letterCard.classList.add('show');
-        bubbleSection.classList.add('show');
-      }, 400);
+    function openEnvelope() {
+      document.getElementById('letterCard').style.display = 'block';
+      document.getElementById('bubbleSection').style.display = 'block';
     }
 
     // Generate Bubble Wrap
     const bubbleGrid = document.getElementById('bubbleGrid');
-    const totalBubbles = 15;
-
-    for (let i = 0; i < totalBubbles; i++) {
+    for (let i = 0; i < 15; i++) {
       const bubble = document.createElement('div');
       bubble.classList.add('bubble');
       bubble.addEventListener('click', function() {
@@ -221,7 +260,7 @@
       bubbleGrid.appendChild(bubble);
     }
 
-    // Efek Suara Popping
+    // Suara Letupan Bubble Wrap
     function playPopSound() {
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
       const osc = ctx.createOscillator();
@@ -229,16 +268,16 @@
       
       osc.type = 'sine';
       osc.frequency.setValueAtTime(800, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(400, ctx.currentTime + 0.05);
+      osc.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + 0.04);
       
-      gain.gain.setValueAtTime(0.3, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+      gain.gain.setValueAtTime(0.2, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.04);
       
       osc.connect(gain);
       gain.connect(ctx.destination);
       
       osc.start();
-      osc.stop(ctx.currentTime + 0.05);
+      osc.stop(ctx.currentTime + 0.04);
     }
   </script>
 </body>
