@@ -130,13 +130,24 @@
       letter-spacing: 1px;
     }
 
-    /* TEKS PETUNJUK BUKA */
+    /* TEKS PETUNJUK BUKA (DENGAN ANIMASI NAIK TURUN) */
     .click-hint {
       margin-top: 25px;
       font-size: 12px;
       letter-spacing: 2px;
       color: #888;
       text-transform: uppercase;
+      animation: bounce 1.8s infinite ease-in-out;
+    }
+
+    /* ANIMASI BERGERAK NAIK-TURUN */
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(8px);
+      }
     }
 
     /* ISI SURAT (POPUP/SLIDE OUT) */
@@ -213,8 +224,10 @@
 </head>
 <body>
 
+  <!-- Badge Atas -->
   <div class="top-badge">♥ With Love</div>
 
+  <!-- Amplop Surat Utama -->
   <div class="envelope-container" onclick="openEnvelope()">
     <div class="flower-stamp">🌸</div>
     <div class="heart-seal">♥</div>
@@ -224,8 +237,10 @@
     </div>
   </div>
 
+  <!-- Teks dengan animasi bergerak halus naik turun -->
   <div class="click-hint">↓ KETUK UNTUK BUKA ↓</div>
 
+  <!-- Isi Surat -->
   <div class="letter-card" id="letterCard">
     <h2>Dear Vannie,</h2>
     <p>Aku mau ngaku kalau aku banyak salah sama kamu. Maafin semua sifat dan perkataanku yang bikin kamu kesel atau sedih yaa...</p>
@@ -233,6 +248,7 @@
     <p style="margin-top:10px; color:#d81b60; font-weight:500;">Ayo balikan lagi sama aku? :(</p>
   </div>
 
+  <!-- Section Bubble Wrap -->
   <div class="bubble-section" id="bubbleSection">
     <div class="bubble-grid" id="bubbleGrid"></div>
     <p class="note-text">
