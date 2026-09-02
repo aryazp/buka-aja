@@ -99,7 +99,9 @@
       align-items: center;
       justify-content: center;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      font-size: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #d81b60;
       z-index: 5;
     }
 
@@ -216,7 +218,7 @@
       margin-bottom: 14px;
     }
 
-    .heart-icon {
+    .divider-line {
       text-align: center;
       color: #e91e63;
       margin: 18px 0;
@@ -300,15 +302,15 @@
     }
 
     .bubble.popped::after {
-      content: '✔';
+      content: '✓';
       font-size: 12px;
       color: rgba(0,0,0,0.2);
     }
 
-    /* POPUP MESSAGE SEPERTI DI FOTO TEMPLATE */
+    /* POPUP MESSAGE MELAYANG */
     .bubble-popup {
       position: absolute;
-      bottom: 110%; /* Melayang di atas bubble */
+      bottom: 110%;
       left: 50%;
       transform: translateX(-50%) scale(0.7);
       background: #ffffff;
@@ -325,7 +327,6 @@
       z-index: 10;
     }
 
-    /* Segitiga kecil di bawah popup */
     .bubble-popup::after {
       content: '';
       position: absolute;
@@ -346,9 +347,9 @@
 <body>
 
   <div id="startScreen">
-    <div class="top-badge">♥ With Love</div>
+    <div class="top-badge">With Love</div>
     <div class="envelope-container" onclick="openLetter()">
-      <div class="flower-stamp">🌸</div>
+      <div class="flower-stamp">FOR</div>
       <div class="heart-seal">♥</div>
       <div class="envelope-text">
         <div class="sub">UNTUK</div>
@@ -363,7 +364,7 @@
     <div class="paper-card">
       <div class="paper-header">
         <div class="paper-date">SURAT UNTUKMU</div>
-        <div class="top-badge" style="margin:0;">♥ With Love</div>
+        <div class="top-badge" style="margin:0;">With Love</div>
       </div>
 
       <h1 class="paper-title">Dear <span>Vannie</span></h1>
@@ -376,23 +377,23 @@
         <p>Bahkan aku sampai lupa kalau ada lampu kecil yang nungguin aku di ujung jalan.</p>
         <p>Aku ngakuin semua kesalahanku, Van.</p>
         
-        <div class="heart-icon">♥</div>
+        <div class="divider-line">♥</div>
 
         <p>Hari terakhir kita, pas kamu minta penjelasan dan pas kamu minta kita udahin semua ini, aku sebenarnya pengen nahan kamu. Aku ga bales chat kamu, aku sengaja. Aku bingung aku harus gimana. Aku sayang sama kamu, tapi di sisi lain kamu pengen udahin semua yang udah kita lakuin.</p>
         <p>Sampai pada akhirnya aku bales chat kamu dengan pasrah sama keadaan. Aku jawab chat kamu, dan bodohnya aku bilang, "iya," padahal aku sebenarnya ga mau nyudahin semua itu.</p>
-        <p>Gatau... aku ga terbiasa bilang enggak saat orang mutusin aku, Van :' (</p>
+        <p>Gatau... aku ga terbiasa bilang enggak saat orang mutusin aku, Van :'(</p>
         <p>Aku sadar sekarang, inti dari permasalahan kita yang berujung udahan ini cuma WAKTU.</p>
         <p>Ngasih kabar itu hal kecil yang seharusnya bisa aku usahain. Bukan soal harus ngobrol lama. Kadang satu pesan, "Bentar, aku lagi a/b/c, nanti aku kabarin lagi ya," mungkin udah cukup supaya kamu ga ngerasa ditinggal.</p>
         <p>Aku ga mau pakai alasan perkuliahan, pertemanan, atau main sebagai alasan. Karena kalau ada yang penting buat kita, harusnya bisa disisihin sedikit waktu buat kasih ketenangan.</p>
         
-        <div class="heart-icon">♥</div>
+        <div class="divider-line">♥</div>
 
-        <p>Dan jujur, aku ga suka kita udahan :' (</p>
+        <p>Dan jujur, aku ga suka kita udahan :'(</p>
         <p>Aku kangen ngobrol sama kamu. Kangen hal-hal kecil yang dulu pernah kita lakuin. Kangen semua sifat kamu ke aku.</p>
         <p>Aku juga ga mau kamu berpikir, waktu kamu minta putus dan aku iyain, kalau aku nyepelein kamu. Aku waktu itu gatau harus gimana. Aku bingung, aku sedih, dan aku masih sayang sama kamu.</p>
         <p>Aku tahu minta maaf ga cukup buat buktiin ke kamu kalau aku benar-benar mau kembali lagi kayak dulu. Aku tahu minta maaf juga ga bisa bikin kamu yakin untuk kembali sama aku.</p>
         <p>Please, give me a shot. I'll prove that I'm fr serious about you.</p>
-        <p>Aku ga pernah sengemis ini sama orang. Aku sayang sama kamu. Aku bingung gimana caranya ngajak kamu kembali :' (</p>
+        <p>Aku ga pernah sengemis ini sama orang. Aku sayang sama kamu. Aku bingung gimana caranya ngajak kamu kembali :'(</p>
         <p>Aku cuma mau bilang...</p>
         <p>Aku ga lupa sama kamu.<br>
         Aku sayang kamu.<br>
@@ -415,56 +416,56 @@
 
   <script>
     const messages = [
-      "I love u 💖",
+      "I love u",
       "Please, let’s go home.",
-      "I miss u… 🥺",
+      "I miss u…",
       "Stay with me.",
-      "You’re my home 🏠",
+      "You’re my home",
       "Thinking of you.",
-      "I’m proud of you ✨",
-      "You make me happy 😊",
+      "I’m proud of you",
+      "You make me happy",
       "Take care, okay?",
-      "Good night, love 🌙",
-      "Good morning! ☀️",
-      "You’re so special 🥰",
+      "Good night, love",
+      "Good morning!",
+      "You’re so special",
       "Don’t give up!",
-      "I’m here for you 🤗",
-      "You’re enough ❤️",
-      "Love you more 💓",
-      "Always & forever ♾️",
-      "My favorite person 🌸",
-      "Let’s run away 🚗",
+      "I’m here for you",
+      "You’re enough",
+      "Love you more",
+      "Always & forever",
+      "My favorite person",
+      "Let’s run away",
       "With you, everything is better.",
-      "You + me = forever 💍",
+      "You + me = forever",
       "I like you. A lot.",
-      "Be happy! 😄",
-      "I need you 🥺",
-      "You’re my person 💕",
-      "You’re so kind ✨",
-      "Let’s watch a movie 🍿",
+      "Be happy!",
+      "I need you",
+      "You’re my person",
+      "You’re so kind",
+      "Let’s watch a movie",
       "Can we do this together?",
-      "You’re my smile 😊",
+      "You’re my smile",
       "Home isn’t a place, it’s you.",
-      "You’re so cute! 🤏",
+      "You’re so cute!",
       "Don’t worry, I got you.",
-      "I’m lucky to have you 🍀",
-      "Coffee together? ☕",
-      "You’re my peace 🕊️",
-      "Let’s grow together 🌱",
-      "I like your voice 🎧",
-      "I love your smile 😃",
-      "You make life better ✨",
+      "I’m lucky to have you",
+      "Coffee together?",
+      "You’re my peace",
+      "Let’s grow together",
+      "I like your voice",
+      "I love your smile",
+      "You make life better",
       "Don’t be sad, I’m here.",
       "My day is better with you.",
-      "You’re my sunshine ☀️",
-      "Let’s hold hands 🤝",
-      "I’ll wait for you ⏳",
-      "I love you in every universe 🌌",
-      "Forever and always 💕",
-      "Just breathe 🌿",
-      "Let’s make more memories 📸",
-      "You mean the world to me 🌎",
-      "See you soon? 🥺"
+      "You’re my sunshine",
+      "Let’s hold hands",
+      "I’ll wait for you",
+      "I love you in every universe",
+      "Forever and always",
+      "Just breathe",
+      "Let’s make more memories",
+      "You mean the world to me",
+      "See you soon?"
     ];
 
     let poppedSet = new Set();
@@ -506,12 +507,10 @@
       bubble.addEventListener('click', function(e) {
         e.stopPropagation();
 
-        // 1. Sembunyikan semua popup lain yang sedang terbuka
         document.querySelectorAll('.bubble-popup').forEach(p => {
           if (p !== popup) p.classList.remove('show');
         });
 
-        // 2. Tandai pecah
         if (!bubble.classList.contains('popped')) {
           bubble.classList.add('popped');
           poppedSet.add(index);
@@ -519,19 +518,16 @@
           playPopSound();
         }
 
-        // 3. Toggle popup melayang di atas bubble
         popup.classList.toggle('show');
       });
 
       bubbleGrid.appendChild(wrapper);
     });
 
-    // Klik di mana saja di luar bubble untuk menutup popup yang sedang terbuka
     document.addEventListener('click', function() {
       document.querySelectorAll('.bubble-popup').forEach(p => p.classList.remove('show'));
     });
 
-    // Suara Letupan Bubble Wrap
     function playPopSound() {
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
       const osc = ctx.createOscillator();
