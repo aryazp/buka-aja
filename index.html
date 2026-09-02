@@ -33,6 +33,44 @@
       100% { background-position: 0% 50%; }
     }
 
+    /* DEKORASI JUDY & NICK DI BACKGROUND */
+    .bg-character {
+      position: fixed;
+      bottom: 10px;
+      width: 160px;
+      height: auto;
+      opacity: 0.85;
+      z-index: 0;
+      pointer-events: none;
+      filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));
+      transition: all 0.5s ease;
+    }
+
+    .bg-judy {
+      left: 20px;
+      animation: floatChar 6s ease-in-out infinite;
+    }
+
+    .bg-nick {
+      right: 20px;
+      animation: floatChar 6s ease-in-out infinite 3s;
+    }
+
+    @keyframes floatChar {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Responsif untuk HP agar karakter tidak menghalangi surat */
+    @media (max-width: 768px) {
+      .bg-character {
+        width: 100px;
+        opacity: 0.4;
+      }
+      .bg-judy { left: -10px; }
+      .bg-nick { right: -10px; }
+    }
+
     /* EFEK HATI MELAYANG */
     .floating-heart {
       position: fixed;
@@ -463,6 +501,10 @@
 </head>
 <body>
 
+  <!-- GAMBAR BACKGROUND JUDY & NICK -->
+  <img src="https://pngimg.com/uploads/zootopia/zootopia_PNG32.png" alt="Judy Hopps" class="bg-character bg-judy">
+  <img src="https://pngimg.com/uploads/zootopia/zootopia_PNG42.png" alt="Nick Wilde" class="bg-character bg-nick">
+
   <!-- ELEMENT AUDIO UNTUK LAGU BACKSOUND -->
   <audio id="bgMusic" loop>
     <source src="lagu.mp3" type="audio/mpeg">
@@ -656,7 +698,6 @@
       const startScreen = document.getElementById('startScreen');
       const contentScreen = document.getElementById('contentScreen');
 
-      // Putar musik saat amplop diklik
       music.play().catch(err => console.log("Gagal memutar audio:", err));
       
       startScreen.classList.add('fade-out');
