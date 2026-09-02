@@ -231,11 +231,17 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     }
 
+    .bubble-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
     .bubble-title {
       font-family: 'Playfair Display', serif;
       font-size: 22px;
       color: #2c3e2e;
-      margin-bottom: 6px;
     }
 
     .bubble-title span {
@@ -243,32 +249,48 @@
       font-style: italic;
     }
 
+    .bubble-count-badge {
+      background: rgba(216, 27, 96, 0.1);
+      color: #d81b60;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 12px;
+      letter-spacing: 1px;
+    }
+
     .bubble-subtext {
       font-size: 12px;
       color: #6a7b6c;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
 
     /* GRID BUBBLE WRAP */
     .bubble-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 12px;
+      gap: 16px 12px;
       justify-items: center;
     }
 
+    .bubble-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     .bubble {
-      width: 52px;
-      height: 52px;
+      width: 54px;
+      height: 54px;
       background: radial-gradient(circle at 30% 30%, #ffcdd2, #ef9a9a);
       border-radius: 50%;
       box-shadow: inset 0 2px 4px rgba(255,255,255,0.8), 0 3px 6px rgba(0,0,0,0.06);
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: transform 0.2s ease, background 0.2s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
     }
 
     .bubble.popped {
@@ -277,28 +299,47 @@
       transform: scale(0.92);
     }
 
-    /* TEKS PESAN DI TENGAH BUBBLE */
-    .bubble-message {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.5);
-      font-size: 8px;
-      color: #880e4f;
-      font-weight: 600;
-      text-align: center;
-      width: 48px;
-      line-height: 1.1;
-      opacity: 0;
-      transition: all 0.25 ease;
-      pointer-events: none;
-      word-wrap: break-word;
+    .bubble.popped::after {
+      content: '✔';
+      font-size: 12px;
+      color: rgba(0,0,0,0.2);
     }
 
-    /* KETIK TEKS AKTIF (TAMPIL) */
-    .bubble-message.show {
+    /* POPUP MESSAGE SEPERTI DI FOTO TEMPLATE */
+    .bubble-popup {
+      position: absolute;
+      bottom: 110%; /* Melayang di atas bubble */
+      left: 50%;
+      transform: translateX(-50%) scale(0.7);
+      background: #ffffff;
+      color: #4a5a4c;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 10;
+    }
+
+    /* Segitiga kecil di bawah popup */
+    .bubble-popup::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 5px;
+      border-style: solid;
+      border-color: #ffffff transparent transparent transparent;
+    }
+
+    .bubble-popup.show {
       opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
+      transform: translateX(-50%) scale(1);
     }
   </style>
 </head>
@@ -361,8 +402,11 @@
     </div>
 
     <div class="bubble-card">
-      <div class="bubble-title">Bubble wrap <span>buat kamu.</span></div>
-      <p class="bubble-subtext">Pencet bubble wrap buat lihat pesan, pencet lagi buat menyembunyikan~</p>
+      <div class="bubble-header">
+        <div class="bubble-title">Bubble wrap <span>buat kamu.</span></div>
+        <div class="bubble-count-badge" id="poppedCount">0 / 50 DIPENCET</div>
+      </div>
+      <p class="bubble-subtext">Pencet bubble buat buka kejutan kecil. Anti-stress, anti-bosen, anti-galau~</p>
 
       <div class="bubble-grid" id="bubbleGrid"></div>
     </div>
@@ -371,57 +415,59 @@
 
   <script>
     const messages = [
-      "I love u",
+      "I love u 💖",
       "Please, let’s go home.",
-      "I miss u…",
+      "I miss u… 🥺",
       "Stay with me.",
-      "You’re my home.",
+      "You’re my home 🏠",
       "Thinking of you.",
-      "I’m proud of you.",
-      "You make me happy.",
+      "I’m proud of you ✨",
+      "You make me happy 😊",
       "Take care, okay?",
-      "Good night, love.",
-      "Good morning!",
-      "You’re so special.",
+      "Good night, love 🌙",
+      "Good morning! ☀️",
+      "You’re so special 🥰",
       "Don’t give up!",
-      "I’m here for you.",
-      "You’re enough.",
-      "Love you more.",
-      "Always & forever.",
-      "My favorite person.",
-      "Let’s run away.",
+      "I’m here for you 🤗",
+      "You’re enough ❤️",
+      "Love you more 💓",
+      "Always & forever ♾️",
+      "My favorite person 🌸",
+      "Let’s run away 🚗",
       "With you, everything is better.",
-      "You + me = forever.",
+      "You + me = forever 💍",
       "I like you. A lot.",
-      "Be happy!",
-      "I need you.",
-      "You’re my person.",
-      "You’re so kind.",
-      "Let’s watch a movie.",
+      "Be happy! 😄",
+      "I need you 🥺",
+      "You’re my person 💕",
+      "You’re so kind ✨",
+      "Let’s watch a movie 🍿",
       "Can we do this together?",
-      "You’re my smile.",
+      "You’re my smile 😊",
       "Home isn’t a place, it’s you.",
-      "You’re so cute!",
+      "You’re so cute! 🤏",
       "Don’t worry, I got you.",
-      "I’m lucky to have you.",
-      "Coffee together?",
-      "You’re my peace.",
-      "Let’s grow together.",
-      "I like your voice.",
-      "I love your smile.",
-      "You make life better.",
+      "I’m lucky to have you 🍀",
+      "Coffee together? ☕",
+      "You’re my peace 🕊️",
+      "Let’s grow together 🌱",
+      "I like your voice 🎧",
+      "I love your smile 😃",
+      "You make life better ✨",
       "Don’t be sad, I’m here.",
       "My day is better with you.",
-      "You’re my sunshine.",
-      "Let’s hold hands.",
-      "I’ll wait for you.",
-      "I love you in every universe.",
-      "Forever and always.",
-      "Just breathe.",
-      "Let’s make more memories.",
-      "You mean the world to me.",
-      "See you soon?"
+      "You’re my sunshine ☀️",
+      "Let’s hold hands 🤝",
+      "I’ll wait for you ⏳",
+      "I love you in every universe 🌌",
+      "Forever and always 💕",
+      "Just breathe 🌿",
+      "Let’s make more memories 📸",
+      "You mean the world to me 🌎",
+      "See you soon? 🥺"
     ];
+
+    let poppedSet = new Set();
 
     function openLetter() {
       const startScreen = document.getElementById('startScreen');
@@ -440,31 +486,49 @@
       }, 700);
     }
 
-    // Generate 50 Bubble Wrap dengan fitur Toggle (Muncul / Sembunyi Teks)
     const bubbleGrid = document.getElementById('bubbleGrid');
-    
-    messages.forEach((msgText) => {
+    const poppedCountElem = document.getElementById('poppedCount');
+
+    messages.forEach((msgText, index) => {
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('bubble-wrapper');
+
       const bubble = document.createElement('div');
       bubble.classList.add('bubble');
 
-      const msg = document.createElement('span');
-      msg.classList.add('bubble-message');
-      msg.innerText = msgText;
+      const popup = document.createElement('div');
+      popup.classList.add('bubble-popup');
+      popup.innerText = msgText;
 
-      bubble.appendChild(msg);
+      wrapper.appendChild(bubble);
+      wrapper.appendChild(popup);
 
-      bubble.addEventListener('click', function() {
-        // Efek visual pecah pertama kali
-        if (!this.classList.contains('popped')) {
-          this.classList.add('popped');
+      bubble.addEventListener('click', function(e) {
+        e.stopPropagation();
+
+        // 1. Sembunyikan semua popup lain yang sedang terbuka
+        document.querySelectorAll('.bubble-popup').forEach(p => {
+          if (p !== popup) p.classList.remove('show');
+        });
+
+        // 2. Tandai pecah
+        if (!bubble.classList.contains('popped')) {
+          bubble.classList.add('popped');
+          poppedSet.add(index);
+          poppedCountElem.innerText = `${poppedSet.size} / 50 DIPENCET`;
           playPopSound();
         }
 
-        // Toggle Teks: Pencet lagi untuk sembunyikan/munculkan teks
-        msg.classList.toggle('show');
+        // 3. Toggle popup melayang di atas bubble
+        popup.classList.toggle('show');
       });
 
-      bubbleGrid.appendChild(bubble);
+      bubbleGrid.appendChild(wrapper);
+    });
+
+    // Klik di mana saja di luar bubble untuk menutup popup yang sedang terbuka
+    document.addEventListener('click', function() {
+      document.querySelectorAll('.bubble-popup').forEach(p => p.classList.remove('show'));
     });
 
     // Suara Letupan Bubble Wrap
