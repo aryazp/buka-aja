@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Untuk Vannie</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400;1,600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400;1,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -36,7 +36,6 @@
       transform: scale(1);
     }
 
-    /* EFEK KETIKA SURAT DIPENCET (FADE OUT HALUS) */
     #startScreen.fade-out {
       opacity: 0;
       transform: scale(0.92);
@@ -158,7 +157,7 @@
     /* HALAMAN 2: ISI SURAT & BUBBLE WRAP */
     #contentScreen {
       display: none;
-      max-width: 460px;
+      max-width: 520px;
       width: 100%;
       margin: 20px 0;
       opacity: 0;
@@ -224,6 +223,7 @@
       font-size: 14px;
     }
 
+    /* BUBBLE WRAP CARD */
     .bubble-card {
       background: #e9f0df;
       border-radius: 16px;
@@ -231,17 +231,11 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     }
 
-    .bubble-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-
     .bubble-title {
       font-family: 'Playfair Display', serif;
       font-size: 22px;
       color: #2c3e2e;
+      margin-bottom: 6px;
     }
 
     .bubble-title span {
@@ -255,34 +249,64 @@
       margin-bottom: 20px;
     }
 
+    /* GRID 50 BUBBLE (5 KOLOM X 10 BARIS) */
     .bubble-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 12px;
+      gap: 10px;
       justify-items: center;
     }
 
+    .bubble-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
     .bubble {
-      width: 48px;
-      height: 48px;
+      width: 52px;
+      height: 52px;
       background: radial-gradient(circle at 30% 30%, #ffcdd2, #ef9a9a);
       border-radius: 50%;
       box-shadow: inset 0 2px 4px rgba(255,255,255,0.8), 0 3px 6px rgba(0,0,0,0.06);
       cursor: pointer;
-      transition: transform 0.1s;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
     }
 
     .bubble.popped {
       background: #d7ccc8;
       box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
-      transform: scale(0.9);
+      transform: scale(0.92);
       cursor: default;
+    }
+
+    /* TULISAN PESAN DI DALAM/DI ATAS BUBBLE */
+    .bubble-message {
+      font-size: 9px;
+      color: #ad1457;
+      font-weight: 600;
+      text-align: center;
+      padding: 0 4px;
+      line-height: 1.1;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .bubble.popped .bubble-message {
+      opacity: 1;
+      transform: scale(1);
     }
   </style>
 </head>
 <body>
 
-  <!-- HALAMAN 1: AMPLOP SURAT -->
   <div id="startScreen">
     <div class="top-badge">♥ With Love</div>
     <div class="envelope-container" onclick="openLetter()">
@@ -296,10 +320,8 @@
     <div class="click-hint">↓ KETUK UNTUK BUKA ↓</div>
   </div>
 
-  <!-- HALAMAN 2: SURAT + BUBBLE WRAP -->
   <div id="contentScreen">
     
-    <!-- Lembaran Surat -->
     <div class="paper-card">
       <div class="paper-header">
         <div class="paper-date">SURAT UNTUKMU</div>
@@ -341,12 +363,9 @@
       </div>
     </div>
 
-    <!-- Bubble Wrap -->
     <div class="bubble-card">
-      <div class="bubble-header">
-        <div class="bubble-title">Bubble wrap <span>buat kamu.</span></div>
-      </div>
-      <p class="bubble-subtext">Pencet bubble wrap buat buka kejutan kecil, biar kamu ga stres dan ga galau~</p>
+      <div class="bubble-title">Bubble wrap <span>buat kamu.</span></div>
+      <p class="bubble-subtext">Pencet setiap bubble wrap buat buka 50 pesan kecil di dalamnya~</p>
 
       <div class="bubble-grid" id="bubbleGrid"></div>
     </div>
@@ -354,6 +373,60 @@
   </div>
 
   <script>
+    // Daftar 50 pesan persis sesuai permintaan
+    const messages = [
+      "I love u",
+      "Please, let’s go home.",
+      "I miss u…",
+      "Stay with me.",
+      "You’re my home.",
+      "Thinking of you.",
+      "I’m proud of you.",
+      "You make me happy.",
+      "Take care, okay?",
+      "Good night, love.",
+      "Good morning!",
+      "You’re so special.",
+      "Don’t give up!",
+      "I’m here for you.",
+      "You’re enough.",
+      "Love you more.",
+      "Always & forever.",
+      "My favorite person.",
+      "Let’s run away.",
+      "With you, everything is better.",
+      "You + me = forever.",
+      "I like you. A lot.",
+      "Be happy!",
+      "I need you.",
+      "You’re my person.",
+      "You’re so kind.",
+      "Let’s watch a movie.",
+      "Can we do this together?",
+      "You’re my smile.",
+      "Home isn’t a place, it’s you.",
+      "You’re so cute!",
+      "Don’t worry, I got you.",
+      "I’m lucky to have you.",
+      "Coffee together?",
+      "You’re my peace.",
+      "Let’s grow together.",
+      "I like your voice.",
+      "I love your smile.",
+      "You make life better.",
+      "Don’t be sad, I’m here.",
+      "My day is better with you.",
+      "You’re my sunshine.",
+      "Let’s hold hands.",
+      "I’ll wait for you.",
+      "I love you in every universe.",
+      "Forever and always.",
+      "Just breathe.",
+      "Let’s make more memories.",
+      "You mean the world to me.",
+      "See you soon?"
+    ];
+
     function openLetter() {
       const startScreen = document.getElementById('startScreen');
       const contentScreen = document.getElementById('contentScreen');
@@ -371,21 +444,34 @@
       }, 700);
     }
 
-    // Generate Bubble Wrap
+    // Generate 50 Bubble Wrap dengan teks masing-masing
     const bubbleGrid = document.getElementById('bubbleGrid');
-    for (let i = 0; i < 15; i++) {
+    
+    messages.forEach((msgText) => {
+      const bubbleContainer = document.createElement('div');
+      bubbleContainer.classList.add('bubble-container');
+
       const bubble = document.createElement('div');
       bubble.classList.add('bubble');
+
+      const msg = document.createElement('span');
+      msg.classList.add('bubble-message');
+      msg.innerText = msgText;
+
+      bubble.appendChild(msg);
+
       bubble.addEventListener('click', function() {
         if (!this.classList.contains('popped')) {
           this.classList.add('popped');
           playPopSound();
         }
       });
-      bubbleGrid.appendChild(bubble);
-    }
 
-    // Suara Popping Bubble Wrap
+      bubbleContainer.appendChild(bubble);
+      bubbleGrid.appendChild(bubbleContainer);
+    });
+
+    // Suara Letupan Bubble Wrap
     function playPopSound() {
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
       const osc = ctx.createOscillator();
